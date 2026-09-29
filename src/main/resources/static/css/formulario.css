@@ -1,0 +1,24 @@
+/* Formulário */
+.campo { margin-bottom: 16px; }
+.campo label { display: block; font-weight: 600; margin-bottom: 6px; font-size: .9rem; }
+.campo input, .campo textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid var(--borda);
+    border-radius: 8px;
+    font: inherit;
+    background: #fff;
+    transition: border-color .15s, box-shadow .15s;
+}
+.campo textarea { resize: vertical; }
+.campo input:focus, .campo textarea:focus {
+    outline: none;
+    border-color: var(--primaria);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, .18);
+}
+.campo-data input { max-width: 240px; }
+.campo.invalido input, .campo.invalido textarea {
+    border-color: var(--erro);
+    background: var(--erro-fundo);
+}
+.erro { display: block; color: var(--erro); margin-top: 4px; font-size: .85rem; }

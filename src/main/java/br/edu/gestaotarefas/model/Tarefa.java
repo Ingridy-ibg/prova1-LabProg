@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package br.edu.gestaotarefas.model;
 
 import java.time.LocalDate;
 

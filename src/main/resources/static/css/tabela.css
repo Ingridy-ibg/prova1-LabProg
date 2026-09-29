@@ -1,0 +1,65 @@
+/* Tabela */
+.tabela-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th {
+    text-align: left;
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--suave);
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--borda);
+}
+td { padding: 12px; border-bottom: 1px solid var(--borda); vertical-align: middle; }
+tbody tr:hover { background: #f8fafc; }
+td.titulo { font-weight: 600; }
+td.descricao { color: var(--suave); max-width: 280px; overflow-wrap: anywhere; }
+tr.concluida td.titulo { text-decoration: line-through; color: var(--suave); }
+
+.acoes { white-space: nowrap; }
+td.acoes form { display: inline-block; margin-right: 6px; }
+
+.selo {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.selo-ok { background: var(--ok-fundo); color: var(--ok); }
+.selo-pendente { background: var(--pendente-fundo); color: var(--pendente); }
+
+.prazo.vencido { color: var(--erro); font-weight: 700; }
+.rotulo-vencido {
+    background: var(--erro-fundo);
+    color: var(--erro);
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 4px;
+}
+
+/* Estado vazio */
+.vazio { text-align: center; padding: 32px 0; color: var(--suave); }
+.vazio-icone { font-size: 2.5rem; }
+.vazio p { margin: 8px 0 0; font-weight: 600; color: var(--texto); }
+
+/* Telas estreitas: tabela vira lista de cartões */
+@media (max-width: 720px) {
+    thead { display: none; }
+    table, tbody, tr, td { display: block; width: 100%; }
+    tr { border: 1px solid var(--borda); border-radius: 10px; margin-bottom: 12px; padding: 6px 0; }
+    td { border: 0; padding: 6px 12px; }
+    td[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        font-size: .7rem;
+        text-transform: uppercase;
+        color: var(--suave);
+        letter-spacing: .04em;
+    }
+    td.descricao { max-width: none; }
+}
