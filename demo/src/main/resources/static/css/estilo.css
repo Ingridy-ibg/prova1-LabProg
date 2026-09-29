@@ -26,15 +26,7 @@ body {
 
 .container { max-width: 960px; margin: 0 auto; padding: 0 16px; }
 
-.topo {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    color: #fff;
-    padding: 32px 0 56px;
-}
-.topo h1 { margin: 0 0 4px; font-size: 1.8rem; }
-.topo p { margin: 0; opacity: .85; }
-
-main { margin-top: -32px; padding-bottom: 40px; }
+main.container { padding-top: 64px; padding-bottom: 40px; }
 
 .cartao {
     background: var(--cartao);
