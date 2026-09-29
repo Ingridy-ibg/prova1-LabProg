@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestão de Tarefas</title>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+<body>
+<header class="topo">
+    <div class="container">
+        <h1>✔ Gestão de Tarefas</h1>
+        <p>Organize seus prazos e acompanhe o que já foi concluído.</p>
+    </div>
+</header>
+
+<main class="container">
+    <section class="cartao">
+        <h2>Nova tarefa</h2>
+        <form th:action="@{/tarefas}" th:object="${tarefa}" method="post" novalidate>
+            <div class="campo" th:classappend="${#fields.hasErrors('titulo')} ? 'invalido'">
+                <label for="titulo">Título *</label>
+                <input type="text" id="titulo" th:field="*{titulo}" placeholder="Ex.: Entregar o trabalho de Lab. de Programação">
+                <small class="erro" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></small>
+            </div>
+
+            <div class="campo" th:classappend="${#fields.hasErrors('descricao')} ? 'invalido'">
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao" rows="3" th:field="*{descricao}" placeholder="Detalhes opcionais"></textarea>
+                <small class="erro" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></small>
+            </div>
+
+            <div class="campo campo-data" th:classappend="${#fields.hasErrors('prazo')} ? 'invalido'">
+                <label for="prazo">Prazo de conclusão *</label>
+                <input type="date" id="prazo" th:field="*{prazo}">
+                <small class="erro" th:if="${#fields.hasErrors('prazo')}" th:errors="*{prazo}"></small>
+            </div>
+
+            <button type="submit" class="btn btn-primario">Adicionar tarefa</button>
+        </form>
+    </section>
+
+    <section class="cartao">
+        <h2>Minhas tarefas <span class="contador" th:text="${#lists.size(tarefas)}">0</span></h2>
+
+        <div class="vazio" th:if="${#lists.isEmpty(tarefas)}">
+            <div class="vazio-icone">📝</div>
+            <p>Nenhuma tarefa cadastrada ainda.</p>
+            <small>Use o formulário acima para adicionar a primeira.</small>
+        </div>
+
+        <div class="tabela-wrap" th:unless="${#lists.isEmpty(tarefas)}">
+            <table>
+                <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Status</th>
+                    <th>Prazo</th>
+                    <th class="acoes">Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="t : ${tarefas}" th:classappend="${t.concluida} ? 'concluida'">
+                    <td class="titulo" data-label="Título" th:text="${t.titulo}">Título</td>
+                    <td class="descricao" data-label="Descrição" th:text="${t.descricao}">Descrição</td>
+                    <td data-label="Status">
+                        <span class="selo" th:classappend="${t.concluida} ? 'selo-ok' : 'selo-pendente'"
+                              th:text="${t.concluida} ? 'Concluída' : 'Não Concluída'">Status</span>
+                    </td>
+                    <td data-label="Prazo">
+                        <span class="prazo"
+                              th:classappend="${!t.concluida and t.prazo.isBefore(#temporals.createToday())} ? 'vencido'"
+                              th:text="${#temporals.format(t.prazo, 'dd/MM/yyyy')}">01/01/2026</span>
+                        <span class="rotulo-vencido"
+                              th:if="${!t.concluida and t.prazo.isBefore(#temporals.createToday())}">vencida</span>
+                    </td>
+                    <td class="acoes" data-label="Ações">
+                        <form th:action="@{/tarefas/{id}/concluir(id=${t.id})}" method="post">
+                            <button type="submit" class="btn btn-secundario"
+                                    th:text="${t.concluida} ? 'Desmarcar' : 'Concluir'">Concluir</button>
+                        </form>
+                        <form th:action="@{/tarefas/{id}/excluir(id=${t.id})}" method="post"
+                              onsubmit="return confirm('Excluir esta tarefa?');">
+                            <button type="submit" class="btn btn-perigo">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>
