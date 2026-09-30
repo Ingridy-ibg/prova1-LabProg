@@ -2,11 +2,11 @@ package br.edu.gestaotarefas.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.BindingResult;
 
 import br.edu.gestaotarefas.model.Tarefa;
 import br.edu.gestaotarefas.repository.TarefaRepository;
@@ -38,8 +38,8 @@ public class TarefaController {
     public String cadastrar(@Valid @ModelAttribute("tarefa") Tarefa tarefa,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("tarefas", repository.findAllByOrderByPrazoAsc());
-            return "tarefas";
+             model.addAttribute("tarefas", repository.findAllByOrderByPrazoAsc());
+             return "tarefas";
         }
         tarefa.setId(null);
         tarefa.setConcluida(false);

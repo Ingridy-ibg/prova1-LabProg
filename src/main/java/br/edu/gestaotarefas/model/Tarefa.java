@@ -20,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "tarefa")
 public class Tarefa {
 
-    private static final String CARACTERES_PERMITIDOS = "^[\\p{L}\\p{N} .,!?:()\\-]*$";
+    private static final String CARACTERES_PERMITIDOS = "^[\\p{L} \\p{N}.,!?:()/\\-]*$";
     private static final String MSG_CARACTERES = "Use apenas letras, números, espaços e pontuação básica (. , ! ? : - ( ))";
 
     @Id
@@ -39,7 +39,7 @@ public class Tarefa {
     private String descricao;
 
     @NotNull(message = "O prazo de conclusão é obrigatório")
-    @FutureOrPresent(message = "O prazo não pode ser uma data no passado")
+    @FutureOrPresent (message = "O prazo não pode ser uma data no passado")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(nullable = false)
     private LocalDate prazo;
